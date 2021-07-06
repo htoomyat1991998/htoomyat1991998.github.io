@@ -1,5 +1,5 @@
 import { pyidaungsu } from "./js/lang.js";
-import Keyboard from "./js/keyboard.js";
+import Keyboard from "./js/Keyboard.js";
 import "https://cdn.jsdelivr.net/npm/vue@2.6.3/dist/vue.js";
 
 const app = new Vue({
