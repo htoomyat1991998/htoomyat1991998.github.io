@@ -2,6 +2,8 @@ import { pyidaungsu } from "./js/lang.js";
 import Keyboard from "./js/Keyboard.js";
 import "https://cdn.jsdelivr.net/npm/vue@2.6.3/dist/vue.js";
 
+const IGNORE_INPUT_KEYS = ['Enter', 'Backspace', 'Delete'];
+
 const app = new Vue({
     data: {
         text: '',
@@ -14,33 +16,39 @@ const app = new Vue({
         // 
     },
     watch: {
-        key(x) {
-            let key = this.keyboard.get(x);
+        key(input) {
+            let key = this.keyboard.get(input);
+            if (IGNORE_INPUT_KEYS.includes(key)) return;
             if (this.text.includes('\u200b\u1031')) {
                 this.text = this.text.replace('\u200b\u1031', `${key}\u1031`);
             } else if (this.text.includes('\u200b\u103c')) {
                 this.text = this.text.replace('\u200b\u103c', `${key}\u103c`);
             } else {
-                switch (x) {
+                let char = this.text[this.text.length - 1] || '';
+                switch (input) {
                     case 's':
-                        let a = this.text[this.text.length - 1];
-
-                        if (a == '\u1031') {
-                            this.text = this.text.slice(0, -1) + '\u103b\u1031';
-                            console.log(1);
+                        if (char == '\u1031') {
+                            if (key == '\u103b') {
+                                console.log(this.text.slice(0, -2));
+                                this.text = this.text.slice(0, -2) + '\u103b\u103e\u1031';
+                            } else {
+                                this.text = this.text.slice(0, -1) + `${key}\u1031`;
+                            }
                         } else {
-                            this.text = this.text.slice(0, -1) + a + '\u103b';
-                            console.log(2);
+                            this.text = this.text.slice(0, -1) + char + '\u103b';
+                        }
+                        break;
+                    case 'S':
+                        if (char == '\u1031') {
+                            this.text = this.text.slice(0, -1) + '\u103e\u1031';
+                        } else {
+                            this.text += key;
                         }
                         break;
                     default:
                         this.text += key;
                 }
             }
-            // this.bin = this.text.split('').map(n => ({
-            //     char: n,
-            //     code: `\\u${n.charCodeAt().toString(16)}`,
-            // })); 
         }
     },
     computed: {
