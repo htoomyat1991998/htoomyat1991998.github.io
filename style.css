@@ -1,0 +1,181 @@
+:root {
+    --text-color: #ffff;
+    --bg-primary: #222a;
+    --bg-highlight: #fff2;
+}
+
+* {
+    box-sizing: content-box;
+}
+
+html,
+body {
+    margin: 0;
+    height: 100%;
+    width: 100vw;
+    overflow: hidden;
+}
+
+
+/* container */
+
+.container {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #222;
+    background-image: url(img/bg.jpg);
+    background-size: cover;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--text-color);
+}
+
+
+/* cursor */
+
+.busy {
+    cursor: wait;
+}
+
+.load {
+    cursor: progress;
+}
+
+
+/* screen */
+
+.screen {
+    position: relative;
+    top: 0;
+    left: 0;
+    height: calc(100vh - 40px);
+}
+
+.desktop {
+    display: grid;
+    height: 100%;
+    grid-template-columns: repeat(18, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    gap: 4px;
+}
+
+.desktop .shortcuts {
+    grid-row: 1/11;
+    padding-top: 5px;
+    padding-left: 5px;
+    display: grid;
+    grid-template-rows: repeat(10, 1fr);
+}
+
+.shortcuts div {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 12px;
+    line-height: 20px;
+    padding: 8px 4px;
+    border-radius: 2px;
+    border: 2px solid transparent;
+    justify-content: space-between;
+    align-items: center;
+    text-shadow: 1px 1px 1px #222;
+}
+
+.shortcuts div:nth-last-child(1) {
+    grid-row: 9/10;
+}
+
+.shortcuts div.selected,
+.shortcuts div:hover {
+    background: #fff4;
+    border: 2px solid #fff6;
+}
+
+.shortcuts div.selected {
+    background: #fff5;
+}
+
+.shortcuts div img {
+    display: block;
+    width: 2.8em;
+    height: 2.8em;
+    margin: 0 auto;
+    padding-bottom: 5px;
+}
+
+
+/* taskbar */
+
+.taskbar {
+    width: 100%;
+    height: 40px;
+    position: absolute;
+    background-color: var(--bg-primary);
+    left: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(5px);
+}
+
+.taskbar div {
+    height: 40px;
+}
+
+.taskbar .start:hover,
+.taskbar .clock .time:hover {
+    background: var(--bg-highlight);
+    backdrop-filter: blur(15px);
+}
+
+.taskbar .start:hover .windows {
+    filter: grayscale(80%);
+}
+
+.taskbar .start i {
+    margin: 10px 15px;
+}
+
+i.windows {
+    display: block;
+    height: 18px;
+    width: 18px;
+    background: url(img/windows-logo.png) no-repeat;
+    background-size: contain;
+    filter: grayscale(100%);
+}
+
+.taskbar .apps {
+    width: 80vw;
+}
+
+.taskbar .clock .time {
+    padding: 10px 5px;
+}
+
+.container .device-disabled {
+    display: none;
+}
+
+@media screen and (max-width: 720px) {
+    .container * {
+        display: none;
+    }
+    .container .device-disabled {
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+    }
+    .container .device-disabled p {
+        display: block;
+        padding: 30px 40px;
+        background: #ddd6;
+        border-radius: 10px;
+        box-shadow: 0 0 4px #555e;
+        backdrop-filter: blur(40px);
+        margin: 20px 15px;
+    }
+}

@@ -6,38 +6,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App</title>
-    <style>
-        html,
-        body {
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .container {
-            margin: auto;
-            display: flex;
-            flex-direction: column;
-            width: 80%;
-            height: 100%;
-            align-items: center;
-            justify-content: center;
-        }
-
-        input[type=text] {
-            width: 100%;
-            padding: 10px 15px;
-        }
-
-        .fw-bold {
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div class="container">
-        <textarea type="text" v-model="text" readonly cols="60" rows="20"></textarea>
-        <h2>{{ key }} <code>{{ keyCode }}</code></h2>
+        <div class="device-disabled">
+            <p>Your screen size of your device is lower than 720px.</p>
+        </div>
+        <div class="screen">
+            <div class="desktop">
+                <div class="shortcuts">
+                    <div id="this-pc">
+                        <img src="img/this-pc.png">
+                        <span>This PC</span>
+                    </div>
+                    <div id="word-2016">
+                        <img src="img/word-icon.png">
+                        <span>Word</span>
+                    </div>
+                    <div id="excel-2016">
+                        <img src="img/excel-icon.png">
+                        <span>Excel</span>
+                    </div>
+                    <div id="powerpoint-2016">
+                        <img src="img/powerpoint-icon.png">
+                        <span>PowerPoint</span>
+                    </div>
+                    <div id="recycle-bin">
+                        <img src="img/recycle-bin.png">
+                        <span>Recycle Bin</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="taskbar">
+            <div class="start">
+                <i class="windows"></i>
+            </div>
+            <div class="apps"></div>
+            <div class="clock">
+                <div class="time"></div>
+            </div>
+        </div>
     </div>
     <script src="app.js" type="module"></script>
 </body>

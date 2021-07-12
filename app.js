@@ -1,74 +1,103 @@
-import { pyidaungsu } from "./js/lang.js";
-import Keyboard from "./js/Keyboard.js";
-import "https://cdn.jsdelivr.net/npm/vue@2.6.3/dist/vue.js";
+const timeElement = document.querySelector('.taskbar .clock .time');
+const screen = document.querySelector('.screen');
+const shortcuts = {
+    computer: document.getElementById('this-pc'),
+    trash: document.getElementById('recycle-bin'),
+    word: document.getElementById('word-2016'),
+    excel: document.getElementById('excel-2016'),
+    powerpoint: document.getElementById('powerpoint-2016'),
+};
 
-const IGNORE_INPUT_KEYS = ['Enter', 'Backspace', 'Delete'];
+window.addEventListener('load', onload);
 
-const app = new Vue({
-    data: {
-        text: '',
-        key: null,
-        keyCode: null,
-        keyboard: null,
-        bin: [],
-    },
-    methods: {
-        // 
-    },
-    watch: {
-        key(input) {
-            let key = this.keyboard.get(input);
-            if (IGNORE_INPUT_KEYS.includes(key)) return;
-            if (this.text.includes('\u200b\u1031')) {
-                this.text = this.text.replace('\u200b\u1031', `${key}\u1031`);
-            } else if (this.text.includes('\u200b\u103c')) {
-                this.text = this.text.replace('\u200b\u103c', `${key}\u103c`);
-            } else {
-                let char = this.text[this.text.length - 1] || '';
-                switch (input) {
-                    case 's':
-                        if (char == '\u1031') {
-                            if (key == '\u103b') {
-                                console.log(this.text.slice(0, -2));
-                                this.text = this.text.slice(0, -2) + '\u103b\u103e\u1031';
-                            } else {
-                                this.text = this.text.slice(0, -1) + `${key}\u1031`;
-                            }
-                        } else {
-                            this.text = this.text.slice(0, -1) + char + '\u103b';
-                        }
-                        break;
-                    case 'S':
-                        if (char == '\u1031') {
-                            this.text = this.text.slice(0, -1) + '\u103e\u1031';
-                        } else {
-                            this.text += key;
-                        }
-                        break;
-                    default:
-                        this.text += key;
-                }
-            }
-        }
-    },
-    computed: {
-        // 
-    },
-    beforeMount() {
-        this.keyboard = new Keyboard(pyidaungsu);
-
-        window.addEventListener('keypress', (event) => {
-            this.key = event.key;
-            this.keyCode = event.keyCode;
-        });
-
-        window.addEventListener('keydown', (event) => {
-            switch (event.key) {
-                case 'Backspace':
-                case 'Delete':
-                    this.text = this.text.slice(0, -1);
-                    break;
-            }
-        });
+shortcuts.computer.addEventListener('click', () => {
+    shortcuts.trash.classList.remove('selected');
+    shortcuts.word.classList.remove('selected');
+    shortcuts.excel.classList.remove('selected');
+    shortcuts.powerpoint.classList.remove('selected');
+    let el = shortcuts.computer;
+    if (el.classList.contains('selected')) {
+        openShortcut();
+        el.classList.remove('selected');
+    } else {
+        el.classList.add('selected');
     }
-}).$mount('.container');
+});
+
+shortcuts.trash.addEventListener('click', () => {
+    shortcuts.computer.classList.remove('selected');
+    shortcuts.word.classList.remove('selected');
+    shortcuts.excel.classList.remove('selected');
+    shortcuts.powerpoint.classList.remove('selected');
+    let el = shortcuts.trash;
+    if (el.classList.contains('selected')) {
+        openShortcut();
+        el.classList.remove('selected');
+    } else {
+        el.classList.add('selected');
+    }
+});
+
+shortcuts.word.addEventListener('click', () => {
+    shortcuts.computer.classList.remove('selected');
+    shortcuts.trash.classList.remove('selected');
+    shortcuts.excel.classList.remove('selected');
+    shortcuts.powerpoint.classList.remove('selected');
+    let el = shortcuts.word;
+    if (el.classList.contains('selected')) {
+        openShortcut();
+        el.classList.remove('selected');
+    } else {
+        el.classList.add('selected');
+    }
+});
+
+shortcuts.excel.addEventListener('click', () => {
+    shortcuts.computer.classList.remove('selected');
+    shortcuts.trash.classList.remove('selected');
+    shortcuts.word.classList.remove('selected');
+    shortcuts.powerpoint.classList.remove('selected');
+    let el = shortcuts.excel;
+    if (el.classList.contains('selected')) {
+        openShortcut();
+        el.classList.remove('selected');
+    } else {
+        el.classList.add('selected');
+    }
+});
+
+shortcuts.powerpoint.addEventListener('click', () => {
+    shortcuts.computer.classList.remove('selected');
+    shortcuts.trash.classList.remove('selected');
+    shortcuts.word.classList.remove('selected');
+    shortcuts.excel.classList.remove('selected');
+    let el = shortcuts.powerpoint;
+    if (el.classList.contains('selected')) {
+        el.classList.remove('selected');
+        openShortcut();
+    } else {
+        el.classList.add('selected');
+    }
+});
+
+function openShortcut() {
+    screen.classList.add('load');
+    setTimeout(() => {
+        screen.classList.remove('load');
+    }, 3000);
+}
+
+
+function onload() {
+    setInterval(loop, 999);
+}
+
+function loop() {
+    clock();
+}
+
+function clock() {
+    let date = new Date();
+    let time = date.toLocaleTimeString();
+    timeElement.textContent = time.replace(/^(\d{2}:\d{2}):\d{2} (AM|PM)$/, '$1 $2');
+}
